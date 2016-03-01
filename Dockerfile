@@ -12,7 +12,7 @@ RUN mkdir -p /app/assets
 
 # install alfresco
 COPY assets/setup/install_alfresco.sh /app/assets/install_alfresco.sh
-RUN chmod +x/app/assets/install_alfresco.sh && \
+RUN chmod +x /app/assets/install_alfresco.sh && \
     /app/assets/install_alfresco.sh
 
 # install mysql connector for alfresco
