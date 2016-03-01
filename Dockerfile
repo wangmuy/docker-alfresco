@@ -28,6 +28,8 @@ COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/class
 
 # init scripts
 COPY assets/init.py /app/
+COPY assets/run.sh /app/
+RUN chmod +x /app/*
 COPY assets/setup/supervisord-alfresco.conf /etc/supervisor/conf.d/
 COPY assets/setup/supervisord-postgresql.conf /etc/supervisor/conf.d/
 
