@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 set -e
 
-ALF_HOME=/alfresco
 CONNECTOR=mysql-connector-java-5.1.38
 
 cd /tmp
