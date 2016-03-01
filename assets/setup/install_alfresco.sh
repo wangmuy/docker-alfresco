@@ -20,6 +20,6 @@ chmod +x $ALF_BIN
 rm $ALF_BIN
 
 # Add account
-RUN groupadd alfresco
-RUN useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco
-RUN chown -R alfresco:alfresco /opt/alfresco
+groupadd alfresco
+useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco
+chown -R alfresco:alfresco /opt/alfresco
