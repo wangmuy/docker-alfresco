@@ -23,13 +23,13 @@ RUN chmod +x /app/assets/install_mysql_connector.sh && \
 
 # this is for LDAP configuration
 RUN mkdir -p /alfresco/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
-COPY assets/setup/ldap-authentication.properties /${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
+COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
 
 
 # init scripts
 COPY assets/init.py /app/
 COPY assets/setup/supervisord-alfresco.conf /etc/supervisor/conf.d/
-COPY assets/supervisord-postgresql.conf /etc/supervisor/conf.d/
+COPY assets/setup/supervisord-postgresql.conf /etc/supervisor/conf.d/
 
 VOLUME ["${ALF_HOME}/alf_data", "${ALF_HOME}/tomcat/logs"]
 
