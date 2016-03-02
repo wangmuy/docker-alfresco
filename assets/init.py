@@ -8,7 +8,7 @@ import time
 
 __author__ = 'Sebastien LANGOUREAUX'
 
-ALFRESCO_PATH = '/var/lib/ghost'
+ALFRESCO_PATH = '/opt/alfresco'
 
 class ServiceRun():
 
