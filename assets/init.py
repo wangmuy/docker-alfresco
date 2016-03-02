@@ -104,7 +104,7 @@ class ServiceRun():
   def set_core(self, environment):
       global ALFRESCO_PATH
 
-      if environment not IN ["UNKNOWN", "TEST", "BACKUP", "PRODUCTION"]:
+      if environment not in ["UNKNOWN", "TEST", "BACKUP", "PRODUCTION"]:
           raise KeyError("Environment must be UNKNOWN, TEST, BACKUP or PRODUCTION")
 
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'system.serverMode\s*=.*', 'system.serverMode=' + environment)
