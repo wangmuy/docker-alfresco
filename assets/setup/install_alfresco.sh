@@ -23,3 +23,6 @@ rm $ALF_BIN
 groupadd alfresco
 useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco
 chown -R alfresco:alfresco /opt/alfresco
+
+# Set sudo
+echo "alfresco ALL=(ALL) NOPASSWD: /opt/alfresco/tomcat/bin/catalina.sh run" >> /etc/sudoers
