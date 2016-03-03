@@ -21,6 +21,7 @@ rm $ALF_BIN
 
 # Move alf_data temporary
 mv ${ALF_HOME}/alf_data ${ALF_HOME}/alf_data_org
+mkdir ${ALF_HOME}/alf_data
 
 # Add account
 groupadd alfresco
