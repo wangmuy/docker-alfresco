@@ -255,7 +255,13 @@ if __name__ == '__main__':
     serviceRun = ServiceRun()
 
     # We set database
-    serviceRun.set_database_connection(os.getenv('DATABASE_TYPE', 'postgresql'), os.getenv('DATABASE_HOST', 'localhost'), os.getenv('DATABASE_PORT', '5432'), os.getenv('DATABASE_NAME', 'alfresco'), os.getenv('DATABASE_USER', 'alfresco'), os.getenv('DATABASE_PASSWORD', 'admin'))
+    # We check if official Postgresql container is linked as DB
+    if os.getenv('DB_ENV_POSTGRES_DB') is not None:
+        serviceRun.set_database_connection('postgresql', 'db', '5432', os.getenv('DB_ENV_POSTGRES_DB'), os.getenv('DB_ENV_POSTGRES_USER'), os.getenv('DB_ENV_POSTGRES_PASSWORD'))
+    elif os.getenv('DB_ENV_MYSQL_DATABASE') is not None:
+        serviceRun.set_database_connection('mysql', 'db', '3306', os.getenv('DB_ENV_MYSQL_DATABASE'), os.getenv('DB_ENV_MYSQL_USER'), os.getenv('DB_ENV_MYSQL_PASSWORD'))
+    else
+        serviceRun.set_database_connection(os.getenv('DATABASE_TYPE', 'postgresql'), os.getenv('DATABASE_HOST', 'localhost'), os.getenv('DATABASE_PORT', '5432'), os.getenv('DATABASE_NAME', 'alfresco'), os.getenv('DATABASE_USER', 'alfresco'), os.getenv('DATABASE_PASSWORD', 'admin'))
 
     # We set alfresco url
     serviceRun.set_alfresco_context(os.getenv('ALFRESCO_HOSTNAME', '127.0.0.1'), os.getenv('ALFRESCO_PORT', '8080'), os.getenv('ALFRESCO_PROTOCOL', 'http'))
