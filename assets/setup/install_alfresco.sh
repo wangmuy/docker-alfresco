@@ -19,6 +19,9 @@ chmod +x $ALF_BIN
 # get rid of installer - makes image smaller
 rm $ALF_BIN
 
+# Move alf_data temporary
+mv {ALF_HOME}/alf_data {ALF_HOME}/alf_data_org
+
 # Add account
 groupadd alfresco
 useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco

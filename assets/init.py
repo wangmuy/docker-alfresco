@@ -211,6 +211,12 @@ class ServiceRun():
       else:
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'authentication.chain\s*=.*', 'authentication.chain=alfrescoNtlm1:alfrescoNtlm')
 
+  def init_data_folder(self):
+      global ALFRESCO_PATH
+
+      if len(os.listdir(ALFRESCO_PATH + '/alf_data')) < 3:
+          os.system('mv ' + ALFRESCO_PATH + '/alf_data_org/' ALFRESCO_PATH + '/alf_data/')
+
   def replace_all(self, file, searchRegex, replaceExp):
     """ Replace String in file with regex
     :param file: The file name where you should to modify the string
@@ -253,6 +259,9 @@ class ServiceRun():
 if __name__ == '__main__':
 
     serviceRun = ServiceRun()
+
+    # We init data folder
+    serviceRun.init_data_folder()
 
     # We set database
     # We check if official Postgresql container is linked as DB
