@@ -260,7 +260,7 @@ if __name__ == '__main__':
         serviceRun.set_database_connection('postgresql', 'db', '5432', os.getenv('DB_ENV_POSTGRES_DB'), os.getenv('DB_ENV_POSTGRES_USER'), os.getenv('DB_ENV_POSTGRES_PASSWORD'))
     elif os.getenv('DB_ENV_MYSQL_DATABASE') is not None:
         serviceRun.set_database_connection('mysql', 'db', '3306', os.getenv('DB_ENV_MYSQL_DATABASE'), os.getenv('DB_ENV_MYSQL_USER'), os.getenv('DB_ENV_MYSQL_PASSWORD'))
-    else
+    else:
         serviceRun.set_database_connection(os.getenv('DATABASE_TYPE', 'postgresql'), os.getenv('DATABASE_HOST', 'localhost'), os.getenv('DATABASE_PORT', '5432'), os.getenv('DATABASE_NAME', 'alfresco'), os.getenv('DATABASE_USER', 'alfresco'), os.getenv('DATABASE_PASSWORD', 'admin'))
 
     # We set alfresco url
