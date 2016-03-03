@@ -22,7 +22,7 @@ RUN chmod +x /app/assets/install_mysql_connector.sh && \
 
 
 # this is for LDAP configuration
-RUN mkdir -p /alfresco/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
+RUN mkdir -p ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
 COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
 
 
@@ -38,4 +38,4 @@ VOLUME ["${ALF_HOME}/alf_data", "${ALF_HOME}/tomcat/logs"]
 EXPOSE 21 137 138 139 445 7070 8009 8080
 
 
-CMD python /app/init.py
+CMD /app/run.sh
