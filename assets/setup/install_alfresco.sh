@@ -20,7 +20,7 @@ chmod +x $ALF_BIN
 rm $ALF_BIN
 
 # Move alf_data temporary
-mv {ALF_HOME}/alf_data {ALF_HOME}/alf_data_org
+mv ${ALF_HOME}/alf_data ${ALF_HOME}/alf_data_org
 
 # Add account
 groupadd alfresco
