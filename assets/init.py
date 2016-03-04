@@ -218,6 +218,169 @@ class ServiceRun():
           os.system('mv ' + ALFRESCO_PATH + '/alf_data_org/* ' + ALFRESCO_PATH + '/alf_data/')
           os.system('chown -R alfresco:alfresco ' + ALFRESCO_PATH + 'alf_data')
 
+
+  def set_reverse_proxy(self, url):
+      global ALFRESCO_PATH
+
+
+      if url is None or url == "":
+          raise KeyError("You must provide url")
+
+      csrf_policy = """
+<config evaluator="string-compare" condition="CSRFPolicy" replace="true">
+
+      <!--
+         Will be used and exposed to the client side code in Alfresco.contants.CSRF_POLICY.
+         Use the Alfresco.util.CSRFPolicy.getHeader() or Alfresco.util.CSRFPolicy.getParameter() with Alfresco.util.CSRFPolicy.getToken()
+         to set the token in custom 3rd party code.
+       -->
+      <client>
+         <cookie>Alfresco-CSRFToken</cookie>
+         <header>Alfresco-CSRFToken</header>
+         <parameter>Alfresco-CSRFToken</parameter>
+      </client>
+
+      <!-- The first rule with a matching request will get its action invoked, the remaining rules will be ignored. -->
+      <filter>
+         <!--
+            Certain Surf POST requests form the WebScript console must be allowed to pass without a token since
+            the Surf WebScript console code can't be dependent on a Share specific filter.
+         -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>^\/page\/caches\/dependency\/clear|^\/page\/index|^\/page\/surfBugStatus|^\/page\/modules\/deploy|^\/page\/modules\/module|^\/page\/api\/javascript\/debugger</path>
+            </request>
+            <action name="assertReferer">
+               <param name="always">false</param>
+               <param name="referer">""" + url + """/.*</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="always">false</param>
+               <param name="origin">""" + url + """</param>
+            </action>
+         </rule>
+
+         <!-- Certain Share POST requests does NOT require a token -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>^/page/dologin.*|^\/page/site\/[^\/]+\/start-workflow|^\/page/start-workflow</path>
+            </request>
+            <action name="assertReferer">
+               <param name="always">false</param>
+               <param name="referer">""" + url + """/.*</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="always">false</param>
+               <param name="origin">""" + url + """</param>
+            </action>
+         </rule>
+
+         <!-- Clear the token when logging out -->
+         <rule>
+            <request>
+               <method>GET</method>
+               <path>^/page/dologout.*</path>
+            </request>
+            <action name="clearToken">
+               <param name="session">Alfresco-CSRFToken</param>
+               <param name="cookie">Alfresco-CSRFToken</param>
+            </action>
+         </rule>
+
+         <!-- Make sure the first token is generated -->
+         <rule>
+            <request>
+               <session>
+                  <attribute name="_alf_USER_ID">.*</attribute>
+                  <attribute name="Alfresco-CSRFToken"/>
+                  <!-- empty attribute element indicates null -->
+               </session>
+            </request>
+            <action name="generateToken">
+               <param name="session">Alfresco-CSRFToken</param>
+               <param name="cookie">Alfresco-CSRFToken</param>
+            </action>
+         </rule>
+
+         <!-- Refresh token on new "page" visit when a user is logged in -->
+         <rule>
+            <request>
+               <method>GET</method>
+               <path>^/page/.*</path>
+               <session>
+                  <attribute name="_alf_USER_ID">.*</attribute>
+                  <attribute name="Alfresco-CSRFToken">.*</attribute>
+               </session>
+            </request>
+            <action name="generateToken">
+               <param name="session">Alfresco-CSRFToken</param>
+               <param name="cookie">Alfresco-CSRFToken</param>
+            </action>
+         </rule>
+
+         <!-- Verify multipart requests contains the token as a parameter and also correct referer & origin header if available -->
+         <rule>
+            <request>
+               <method>POST</method>
+               <header name="Content-Type">^multipart/.*</header>
+               <session>
+                  <attribute name="_alf_USER_ID">.*</attribute>
+               </session>
+            </request>
+            <action name="assertToken">
+               <param name="session">Alfresco-CSRFToken</param>
+               <param name="parameter">Alfresco-CSRFToken</param>
+            </action>
+            <action name="assertReferer">
+               <param name="always">false</param>
+               <param name="referer">""" + url + """/.*</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="always">false</param>
+               <param name="origin">""" + url + """</param>
+            </action>
+         </rule>
+
+         <!--
+            Verify there is a token in the header for remaining state changing requests and also correct
+            referer & origin headers if available. We "catch" all content types since just setting it to
+            "application/json.*" since a webscript that doesn't require a json request body otherwise would be
+            successfully executed using i.e. "text/plain".
+         -->
+         <rule>
+            <request>
+               <method>POST|PUT|DELETE</method>
+               <session>
+                  <attribute name="_alf_USER_ID">.*</attribute>
+               </session>
+            </request>
+            <action name="assertToken">
+               <param name="session">Alfresco-CSRFToken</param>
+               <param name="header">Alfresco-CSRFToken</param>
+            </action>
+            <action name="assertReferer">
+               <param name="always">false</param>
+               <param name="referer">""" + url + """/.*</param>
+            </action>
+            <action name="assertOrigin">
+               <param name="always">false</param>
+               <param name="origin">""" + url + """</param>
+            </action>
+
+         </rule>
+      </filter>
+   </config>
+      """
+
+      # Me copy the original and move this on each start
+      os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', '<\/alfresco-config>', csrf_policy + "\n</alfresco-config>")
+
+
+
+
   def replace_all(self, file, searchRegex, replaceExp):
     """ Replace String in file with regex
     :param file: The file name where you should to modify the string
@@ -293,3 +456,7 @@ if __name__ == '__main__':
 
     # We set LDAP
     serviceRun.set_ldap(os.getenv('LDAP_ENABLED', 'false'), os.getenv('LDAP_AUTH_FORMAT'), os.getenv('LDAP_HOST'), os.getenv('LDAP_USER'), os.getenv('LDAP_PASSWORD'), os.getenv('LDAP_ADMINS'), os.getenv('LDAP_GROUP_SEARCHBASE'), os.getenv('LDAP_USER_SEARCHBASE'))
+
+    # Reverse Proxy
+    if os.getenv('REVERSE_PROXY_URL') not None:
+        serviceRun.set_reverse_proxy(os.getenv('REVERSE_PROXY_URL'))

@@ -23,6 +23,9 @@ rm $ALF_BIN
 mv ${ALF_HOME}/alf_data ${ALF_HOME}/alf_data_org
 mkdir ${ALF_HOME}/alf_data
 
+# We copy the original setting for share to tune them after start
+cp ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org
+
 # Add account
 groupadd alfresco
 useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco
