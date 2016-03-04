@@ -464,5 +464,5 @@ if __name__ == '__main__':
     serviceRun.set_ldap(os.getenv('LDAP_ENABLED', 'false'), os.getenv('LDAP_AUTH_FORMAT'), os.getenv('LDAP_HOST'), os.getenv('LDAP_USER'), os.getenv('LDAP_PASSWORD'), os.getenv('LDAP_ADMINS'), os.getenv('LDAP_GROUP_SEARCHBASE'), os.getenv('LDAP_USER_SEARCHBASE'))
 
     # Reverse Proxy
-    if os.getenv('REVERSE_PROXY_URL') not None:
+    if os.getenv('REVERSE_PROXY_URL') is not None:
         serviceRun.set_reverse_proxy(os.getenv('REVERSE_PROXY_URL'))
