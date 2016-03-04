@@ -218,7 +218,7 @@ class ServiceRun():
           os.system('mv ' + ALFRESCO_PATH + '/alf_data_org/* ' + ALFRESCO_PATH + '/alf_data/')
           os.system('chown -R alfresco:alfresco ' + ALFRESCO_PATH + '/alf_data')
 
-  def replace_all(self, file, searchRegex, replaceExp):
+  def replace_all(self, file, searchRegex, replaceExp, is_create = True):
     """ Replace String in file with regex
     :param file: The file name where you should to modify the string
     :param searchRegex: The pattern witch must match to replace the string
@@ -226,6 +226,7 @@ class ServiceRun():
     :return:
     """
 
+    is_found = False
     regex = re.compile(searchRegex, re.IGNORECASE)
 
     f = open(file,'r')
@@ -237,10 +238,14 @@ class ServiceRun():
     for line in out:
       if regex.search(line) is not None:
         line = regex.sub(replaceExp, line)
+        is_found = True
 
       f.write(line)
 
     f.close()
+
+    if is_create is True and is_found is False:
+        self.add_end_file(file, replaceExp)
 
 
   def add_end_file(self, file, line):
