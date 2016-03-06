@@ -1,4 +1,4 @@
-# gui81/alfresco
+# webcenter/rancher-alfresco
 
 FROM quay.io/webcenter/rancher-base-image:latest
 MAINTAINER Sebastien LANGOUREAUX (linuxworkgroup@hotmail.com)
