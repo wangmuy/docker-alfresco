@@ -17,8 +17,8 @@ RUN /app/assets/install_alfresco.sh
 
 # install mysql connector for alfresco
 COPY assets/setup/install_mysql_connector.sh /app/assets/install_mysql_connector.sh
-RUN chmod +x /app/assets/install_mysql_connector.sh && \
-    /app/assets/install_mysql_connector.sh
+RUN chmod +x /app/assets/install_mysql_connector.sh
+RUN /app/assets/install_mysql_connector.sh
 
 
 # this is for LDAP configuration

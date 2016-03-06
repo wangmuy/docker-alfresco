@@ -110,6 +110,7 @@ class ServiceRun():
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'system.serverMode\s*=.*', 'system.serverMode=' + environment)
 
 
+
   def set_mail(self, host, port, user, password, protocol, starttls_enable, mail_sender):
       global ALFRESCO_PATH
 
