@@ -41,7 +41,7 @@ Here is how you can help:
 
 This docker image is created to run on Rancher ecosystem. You can also play it directly on top of Docker.
 
-For more information about to run Alfresco on Rancher on few seconds, read my [blog](https://blog.webcenter.fr)
+For more information about to run Alfresco on Rancher on few seconds, read my [blog](https://blog.webcenter.fr).
 
 
 # Installation
@@ -64,6 +64,8 @@ docker build --tag="$USER/alfresco" .
 
 
 # Quick Start
+
+If you are french, you can read my [blog](https://blog.webcenter.fr) to found more advance usage. For exemple how to deploy Alfresco in few minutes on Rancher for production usage.
 
 ## Use Rancher
 
@@ -127,7 +129,7 @@ docker run -d --name "alfresco" \
 ```
 
 ## Reverse Proxy
-To run Alfresco behind a Reverse Proxy, you need to add extra paramater like this :
+To run Alfresco behind a Reverse Proxy, you need to add extra parameter like this :
 
 ```bash
 docker run -d --name "alfresco" \
@@ -139,7 +141,7 @@ docker run -d --name "alfresco" \
 ```
 
 ## Mail setting
-To allow Alfresco send and receive mail, you need to add extras paramaters :
+To allow Alfresco send and receive mail, you need to add extras parameters :
 
 ```bash
 docker run -d --name "alfresco" \
