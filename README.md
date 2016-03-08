@@ -2,9 +2,7 @@ rancher-alfresco
 ===============
 
 # Table of Contents
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Contributing](#contributing)
 - [Note](#note)
@@ -26,7 +24,6 @@ rancher-alfresco
 - [Upgrading](#upgrading)
 - [References](#references)
 
-<!-- /TOC -->
 
 
 # Introduction
@@ -50,12 +47,12 @@ For more information about to run Alfresco on Rancher on few seconds, read my [b
 # Installation
 Pull the image from the docker index.
 ```bash
-docker pull quay.io/webcenter/rancher-alfresco:latest
+docker pull webcenter/rancher-alfresco:latest
 ```
 
 or pull a particular version:
 ```bash
-docker pull quay.io/webcenter/rancher-alfresco:v5.1.0-1
+docker pull webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 Alternatively, you can build the image yourself:
@@ -87,7 +84,7 @@ Congratulation, you have Alfresco.
 Run the alfresco image with the name "alfresco".
 
 ```bash
-docker run --name='alfresco' -it --rm -p 8080:8080 quay.io/webcenter/rancher-alfresco
+docker run --name='alfresco' -it --rm -p 8080:8080 webcenter/rancher-alfresco
 ```
 
 **NOTE**: Please allow a few minutes for the application to start, especially if
@@ -126,7 +123,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 ## Reverse Proxy
@@ -138,7 +135,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 ## Mail setting
@@ -154,7 +151,7 @@ docker run -d --name "alfresco" \
   -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 ## FTP setting
@@ -167,7 +164,7 @@ docker run -d --name "alfresco" \
   -p 21:21 -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 ## CIFS
 To access on alfresco as a Windows share, you must setting CIFS :
@@ -180,7 +177,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 445:445 -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 ## LDAP authentification
@@ -199,7 +196,7 @@ docker run -d --name "alfresco" \
   -p 445:445 -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  quay.io/webcenter/rancher-alfresco:v5.1.0-1
+  webcenter/rancher-alfresco:v5.1.0-2
 ```
 
 # Parameters
