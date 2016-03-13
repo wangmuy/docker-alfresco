@@ -85,9 +85,9 @@ class ServiceRun():
       if protocol is None or protocol == "":
           raise KeyError("You must provide protocol")
 
-      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.host\s*=.*', 'alfresco.host=' + host)
-      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.port\s*=.*', 'alfresco.port=' + port)
-      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.protocol\s*=.*', 'alfresco.protocol=' + protocol)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.host\s*=.*', 'share.host=' + host)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.port\s*=.*', 'share.port=' + port)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'share.protocol\s*=.*', 'share.protocol=' + protocol)
 
   def set_ftp(self, enable, port):
       global ALFRESCO_PATH
