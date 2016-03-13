@@ -36,4 +36,4 @@ echo "alfresco ALL=(ALL) NOPASSWD: /opt/alfresco/tomcat/bin/catalina.sh run" >> 
 
 # Add extra library
 apt-get update
-apt-get install -y fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2
+apt-get install -y fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2 ghostscript imagemagick xvfb xfonts-base
