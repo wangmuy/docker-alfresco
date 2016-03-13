@@ -25,6 +25,8 @@ RUN /app/assets/install_mysql_connector.sh
 RUN mkdir -p ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
 COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
 
+# this is for imagemagick
+COPY assets/setup/imagemagick-transform.properties /opt/alfresco/tomcat/shared/classes/alfresco/extension/subsystems/thirdparty/default/imagemagick-transform.properties
 
 # init scripts
 COPY assets/init.py /app/
@@ -32,6 +34,9 @@ COPY assets/run.sh /app/
 RUN chmod +x /app/*
 COPY assets/setup/supervisord-alfresco.conf /etc/supervisor/conf.d/
 COPY assets/setup/supervisord-postgresql.conf /etc/supervisor/conf.d/
+
+# CLEAN APT
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 VOLUME ["${ALF_HOME}/alf_data", "${ALF_HOME}/tomcat/logs"]
 

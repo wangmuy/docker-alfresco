@@ -84,7 +84,7 @@ class ServiceRun():
 
       """
 
-      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', re.escape('</alfresco-config>', alfresco_setting + '</alfresco-config>')
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', re.escape('</alfresco-config>'), alfresco_setting + '</alfresco-config>')
 
 
   def set_share_context(self, host, port, protocol):
@@ -482,5 +482,3 @@ if __name__ == '__main__':
     # Reverse Proxy
     if os.getenv('REVERSE_PROXY_URL') is not None:
         serviceRun.set_reverse_proxy(os.getenv('REVERSE_PROXY_URL'))
-
-        
