@@ -33,3 +33,7 @@ chown -R alfresco:alfresco /opt/alfresco
 
 # Set sudo
 echo "alfresco ALL=(ALL) NOPASSWD: /opt/alfresco/tomcat/bin/catalina.sh run" >> /etc/sudoers
+
+# Add extra library
+apt-get update
+apt-get install fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2
