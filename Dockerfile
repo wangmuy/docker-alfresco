@@ -25,8 +25,6 @@ RUN /app/assets/install_mysql_connector.sh
 RUN mkdir -p ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
 COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
 
-# this is for imagemagick
-#COPY assets/setup/imagemagick-transform.properties /opt/alfresco/tomcat/shared/classes/alfresco/extension/subsystems/thirdparty/default/imagemagick-transform.properties
 
 # init scripts
 COPY assets/init.py /app/

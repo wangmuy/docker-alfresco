@@ -73,18 +73,6 @@ class ServiceRun():
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'alfresco.port\s*=.*', 'alfresco.port=' + port)
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'alfresco.protocol\s*=.*', 'alfresco.protocol=' + protocol)
 
-      alfresco_setting = """
-      <config evaluator="string-compare" condition="Server">
-        <server>
-          <scheme>""" + protocol + """</scheme>
-          <hostname>""" + host + """</hostname>
-          <port>""" + port + """</port>
-        </server>
-    </config>
-
-      """
-
-      #self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', re.escape('</alfresco-config>'), alfresco_setting + '</alfresco-config>')
 
 
   def set_share_context(self, host, port, protocol):
