@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 set -e
 
-# vars
+# Add extra library
+apt-get update
+apt-get install -y fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2 ghostscript imagemagick xvfb xfonts-base
 
+# vars
 ALF_HOME=/opt/alfresco
 ALF_BIN=$(basename "${ALF_URL}")
 export JAVA_HOME=${ALF_HOME}/java
@@ -33,7 +36,3 @@ chown -R alfresco:alfresco /opt/alfresco
 
 # Set sudo
 echo "alfresco ALL=(ALL) NOPASSWD: /opt/alfresco/tomcat/bin/catalina.sh run" >> /etc/sudoers
-
-# Add extra library
-apt-get update
-apt-get install -y fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2 ghostscript imagemagick xvfb xfonts-base
