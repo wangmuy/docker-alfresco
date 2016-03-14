@@ -376,38 +376,6 @@ class ServiceRun():
          </rule>
       </filter>
    </config>
-
-   <config evaluator="string-compare" condition="Remote">
-   <remote>
-      <endpoint>
-         <id>alfresco-noauth</id>
-         <name>Alfresco - unauthenticated access</name>
-         <description>Access to Alfresco Repository WebScripts that do not require authentication</description>
-         <connector-id>alfresco</connector-id>
-         <endpoint-url>""" + url + """/alfresco/s</endpoint-url>
-         <identity>none</identity>
-      </endpoint>
-
-      <endpoint>
-         <id>alfresco</id>
-         <name>Alfresco - user access</name>
-         <description>Access to Alfresco Repository WebScripts that require user authentication</description>
-         <connector-id>alfresco</connector-id>
-         <endpoint-url>""" + url + """/alfresco/s</endpoint-url>
-         <identity>user</identity>
-      </endpoint>
-
-      <endpoint>
-         <id>alfresco-feed</id>
-         <name>Alfresco Feed</name>
-         <description>Alfresco Feed - supports basic HTTP authentication via the EndPointProxyServlet</description>
-         <connector-id>http</connector-id>
-         <endpoint-url>""" + url + """/alfresco/s</endpoint-url>
-         <basic-auth>true</basic-auth>
-         <identity>user</identity>
-      </endpoint>
-   </remote>
-</config>
       """
 
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', '<\/alfresco-config>', csrf_policy + "\n</alfresco-config>")
