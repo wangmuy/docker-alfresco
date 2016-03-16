@@ -73,6 +73,8 @@ class ServiceRun():
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'alfresco.port\s*=.*', 'alfresco.port=' + port)
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'alfresco.protocol\s*=.*', 'alfresco.protocol=' + protocol)
 
+
+
   def set_share_context(self, host, port, protocol):
       global ALFRESCO_PATH
 
@@ -108,6 +110,7 @@ class ServiceRun():
           raise KeyError("Environment must be UNKNOWN, TEST, BACKUP or PRODUCTION")
 
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'system.serverMode\s*=.*', 'system.serverMode=' + environment)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'alfresco.authentification.allowGuestLogin\s*=.*', 'alfresco.authentification.allowGuestLogin=false')
 
 
 
@@ -375,8 +378,6 @@ class ServiceRun():
    </config>
       """
 
-      # Me copy the original and move this on each start
-      os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
       self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml', '<\/alfresco-config>', csrf_policy + "\n</alfresco-config>")
 
 
@@ -430,6 +431,9 @@ class ServiceRun():
 if __name__ == '__main__':
 
     serviceRun = ServiceRun()
+
+    # We init share-config
+    os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
 
     # We init data folder
     serviceRun.init_data_folder()
