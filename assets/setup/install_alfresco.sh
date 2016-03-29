@@ -30,7 +30,7 @@ mkdir ${ALF_HOME}/alf_data
 cp ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org
 
 # We copy the original setting for alfresco to tune them after start
-cp ${ALF_HOME}/tomcat/shared/classes/alfresco.properties cp ${ALF_HOME}/tomcat/shared/classes/alfrsco.properties.org
+cp ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties.org
 
 # Add account
 groupadd alfresco

@@ -444,7 +444,7 @@ if __name__ == '__main__':
     serviceRun = ServiceRun()
 
     # We init alfresco config
-    os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfrsco.properties.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfrsco.properties')
+    os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties')
 
     # We init share-config
     os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
