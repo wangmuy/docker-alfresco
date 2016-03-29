@@ -124,41 +124,41 @@ class ServiceRun():
               raise KeyError("You must provide protocol")
           if mail_sender is None or mail_sender =="":
               raise KeyError("You must provide the mail sender")
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.host\s*=.*', 'mail.host=' + host)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.port\s*=.*', 'mail.port=' + port)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.protocol\s*=.*', 'mail.protocol=' + protocol)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.from.default\s*=.*', 'mail.from.default=' + mail_sender)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.host\s*=.*', 'mail.host=' + host)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.port\s*=.*', 'mail.port=' + port)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.protocol\s*=.*', 'mail.protocol=' + protocol)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.from.default\s*=.*', 'mail.from.default=' + mail_sender)
       else:
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.host\s*=', '#mail.host=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.port\s*=', '#mail.port=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.protocol\s*=', '#mail.protocol=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.from.default\s*=', 'mail.from.default=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.host\s*=', '#mail.host=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.port\s*=', '#mail.port=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.protocol\s*=', '#mail.protocol=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.from.default\s*=', 'mail.from.default=')
 
       if user is not None and user != "":
           if password is None or password == "":
               raise KeyError("You must provide password")
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.username\s*=.*', 'mail.username=' + username)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.password\s*=.*', 'mail.password=' + password)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.username\s*=.*', 'mail.username=' + username)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.password\s*=.*', 'mail.password=' + password)
 
           if protocol == "smtp":
-              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtp.auth\s*=.*', 'mail.smtp.auth=true')
+              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.auth\s*=.*', 'mail.smtp.auth=true')
               if starttls_enable == "true":
-                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtp.starttls.enable\s*=.*', 'mail.smtp.starttls.enable=true')
+                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.starttls.enable\s*=.*', 'mail.smtp.starttls.enable=true')
               else:
-                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtp.starttls.enable\s*=', '#mail.smtp.starttls.enable=')
+                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.starttls.enable\s*=', '#mail.smtp.starttls.enable=')
           elif protocol == "smtps":
-              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtps.auth\s*=.*', 'mail.smtps.auth=true')
+              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.auth\s*=.*', 'mail.smtps.auth=true')
               if starttls_enable == "true":
-                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtps.starttls.enable\s*=.*', 'mail.smtps.starttls.enable=true')
+                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.starttls.enable\s*=.*', 'mail.smtps.starttls.enable=true')
               else:
-                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtps.starttls.enable\s*=', '#mail.smtps.starttls.enable=')
+                  self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.starttls.enable\s*=', '#mail.smtps.starttls.enable=')
       else:
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.username\s*=', '#mail.username=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.password\s*=', '#mail.password=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtp.auth\s*=', '#mail.smtp.auth=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtps.auth\s*=', '#mail.smtps.auth=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtp.starttls.enable\s*=', '#mail.smtp.starttls.enable=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'mail.smtps.starttls.enable\s*=', '#mail.smtps.starttls.enable=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.username\s*=', '#mail.username=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.password\s*=', '#mail.password=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.auth\s*=', '#mail.smtp.auth=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.auth\s*=', '#mail.smtps.auth=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.starttls.enable\s*=', '#mail.smtp.starttls.enable=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.starttls.enable\s*=', '#mail.smtps.starttls.enable=')
 
 
 
@@ -171,19 +171,19 @@ class ServiceRun():
           if domain is None or domain == "":
               raise KeyError("You must provide the domain")
 
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.enabled\s*=.*', 'cifs.enabled=true')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.Server.Name\s*=.*', 'cifs.Server.Name=' + server_name)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.domain\s*=.*', 'cifs.domain=' + domain)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.hostannounce\s*=.*', 'cifs.hostannounce=true')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.broadcast\s*=.*', 'cifs.broadcast=0.0.0.255')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.ipv6.enabled\s*=.*', 'cifs.ipv6.enabled=false')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.enabled\s*=.*', 'cifs.enabled=true')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.Server.Name\s*=.*', 'cifs.Server.Name=' + server_name)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.domain\s*=.*', 'cifs.domain=' + domain)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.hostannounce\s*=.*', 'cifs.hostannounce=true')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.broadcast\s*=.*', 'cifs.broadcast=0.0.0.255')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.ipv6.enabled\s*=.*', 'cifs.ipv6.enabled=false')
       else:
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.enabled\s*=', '#cifs.enabled=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.Server.Name\s*=', '#cifs.Server.Name=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.domain\s*=', '#cifs.domain=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.hostannounce\s*=', '#cifs.hostannounce=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.broadcast\s*=', '#cifs.broadcast=')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'cifs.ipv6.enabled\s*=', '#cifs.ipv6.enabled=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.enabled\s*=', '#cifs.enabled=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.Server.Name\s*=', '#cifs.Server.Name=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.domain\s*=', '#cifs.domain=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.hostannounce\s*=', '#cifs.hostannounce=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.broadcast\s*=', '#cifs.broadcast=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.cifs.ipv6.enabled\s*=', '#cifs.ipv6.enabled=')
 
   def set_ldap(self, enable, auth_format, host, user, password, list_admins, search_base_group, search_base_user):
       global ALFRESCO_PATH
@@ -382,6 +382,17 @@ class ServiceRun():
 
 
 
+  def set_vti_setting(self, host, port):
+
+      if host is not None and host != "" and port is not None and port > 0:
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.port\s*=.*', 'vti.server.port=7070')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.host\s*=.*', 'vti.server.external.host=' + host)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.port\s*=.*', 'vti.server.external.port=' + port)
+
+      else:
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.port\s*=.*', '#vti.server.port=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.host\s*=.*', '#vti.server.external.host=')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.port\s*=.*', '#vti.server.external.port=')
 
 
   def replace_all(self, file, searchRegex, replaceExp, is_create = True):
@@ -432,6 +443,9 @@ if __name__ == '__main__':
 
     serviceRun = ServiceRun()
 
+    # We init alfresco config
+    os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfrsco.properties.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfrsco.properties')
+
     # We init share-config
     os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
 
@@ -471,3 +485,6 @@ if __name__ == '__main__':
     # Reverse Proxy
     if os.getenv('REVERSE_PROXY_URL') is not None:
         serviceRun.set_reverse_proxy(os.getenv('REVERSE_PROXY_URL'))
+
+    # We set vti
+    serviceRun.set_vti_setting(os.getenv('VTI_HOST'), os.getenv('VTI_PORT'))
