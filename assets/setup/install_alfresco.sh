@@ -1,8 +1,11 @@
 #!/usr/bin/env sh
 set -e
 
-# vars
+# Add extra library
+apt-get update
+apt-get install -y fontconfig libice6 libsm6 libxt6 libxrender1 libfontconfig1 libxinerama1 libglu1-mesa  libcups2 ghostscript imagemagick xvfb xfonts-base
 
+# vars
 ALF_HOME=/opt/alfresco
 ALF_BIN=$(basename "${ALF_URL}")
 export JAVA_HOME=${ALF_HOME}/java
@@ -25,6 +28,9 @@ mkdir ${ALF_HOME}/alf_data
 
 # We copy the original setting for share to tune them after start
 cp ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org
+
+# We copy the original setting for alfresco to tune them after start
+cp ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties.org
 
 # Add account
 groupadd alfresco
