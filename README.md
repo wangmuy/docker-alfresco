@@ -52,7 +52,7 @@ docker pull webcenter/rancher-alfresco:latest
 
 or pull a particular version:
 ```bash
-docker pull webcenter/rancher-alfresco:v5.1.0-2
+docker pull webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 Alternatively, you can build the image yourself:
@@ -125,7 +125,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 ## Reverse Proxy
@@ -137,7 +137,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 ## Mail setting
@@ -153,7 +153,7 @@ docker run -d --name "alfresco" \
   -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 ## FTP setting
@@ -166,7 +166,7 @@ docker run -d --name "alfresco" \
   -p 21:21 -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 ## CIFS
 To access on alfresco as a Windows share, you must setting CIFS :
@@ -179,7 +179,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 445:445 -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 ## LDAP authentification
@@ -198,7 +198,7 @@ docker run -d --name "alfresco" \
   -p 445:445 -p 7070:7070 -p 8080:8080 \
   --link postgres:db \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 ## VTI external access
@@ -212,7 +212,7 @@ docker run -d --name "alfresco" \
   --link postgres:db \
   -p 445:445 -p 7070:7070 -p 8080:8080 \
   -v /host/alfresco_data=/opt/alfresco/alf_data \
-  webcenter/rancher-alfresco:v5.1.0-2
+  webcenter/rancher-alfresco:v5.1.0-3
 ```
 
 
