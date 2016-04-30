@@ -479,6 +479,9 @@ if __name__ == '__main__':
     # We init data folder
     serviceRun.init_data_folder()
 
+    # We remove log rotation to manage them with logrotate
+    serviceRun.disable_log_rotation()
+
     # We set database
     # We check if official Postgresql container is linked as DB
     if os.getenv('DB_ENV_POSTGRES_DB') is not None:
