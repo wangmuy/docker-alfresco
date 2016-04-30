@@ -25,6 +25,8 @@ RUN /app/assets/install_mysql_connector.sh
 RUN mkdir -p ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/
 COPY assets/setup/ldap-authentication.properties ${ALF_HOME}/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties
 
+# Logrotate
+COPY assets/setup/logrotate-alfresco.conf /etc/logrotate.d/alfresco
 
 # init scripts
 COPY assets/init.py /app/

@@ -32,6 +32,10 @@ cp ${ALF_HOME}/tomcat/shared/classes/alfresco/web-extension/share-config-custom.
 # We copy the original setting for alfresco to tune them after start
 cp ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties ${ALF_HOME}/tomcat/shared/classes/alfresco-global.properties.org
 
+# We copy the original setting for tomcat to tune them after start
+cp ${ALF_HOME}/tomcat/conf/server.xml ${ALF_HOME}/tomcat/conf/server.xml.org
+cp ${ALF_HOME}/tomcat/conf/logging.properties ${ALF_HOME}/tomcat/conf/logging.properties.org
+
 # Add account
 groupadd alfresco
 useradd -s /bin/false -g alfresco -d /opt/alfresco alfresco

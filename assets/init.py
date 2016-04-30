@@ -395,6 +395,29 @@ class ServiceRun():
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.port\s*=.*', '#vti.server.external.port=')
 
 
+  def disable_log_rotation(self):
+
+      valve_setting = """
+<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+       pattern="combined" rotatable="false"
+       prefix="access_log" suffix=".log" />
+      """
+      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', '<Valve[^>]+/>', valve_setting)
+
+      logging_setting = """
+1catalina.org.apache.juli.FileHandler.rotatable = false
+2localhost.org.apache.juli.FileHandler.rotatable = false
+3manager.org.apache.juli.FileHandler.rotatable = false
+4host-manager.org.apache.juli.FileHandler.rotatable = false
+
+1catalina.org.apache.juli.FileHandler.suffix = log
+2localhost.org.apache.juli.FileHandler.suffix = log
+3manager.org.apache.juli.FileHandler.suffix = log
+4host-manager.org.apache.juli.FileHandler.suffix = log
+      """
+
+      self.add_end_file(ALFRESCO_PATH + '/tomcat/conf/logging.properties', logging_setting)
+
   def replace_all(self, file, searchRegex, replaceExp, is_create = True):
     """ Replace String in file with regex
     :param file: The file name where you should to modify the string
@@ -448,6 +471,10 @@ if __name__ == '__main__':
 
     # We init share-config
     os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
+
+    # We init tomcat setting
+    os.system('cp ' + ALFRESCO_PATH + '/tomcat/conf/server.xml.org ' + ALFRESCO_PATH + '/tomcat/conf/server.xml')
+    os.system('cp ' + ALFRESCO_PATH + '/tomcat/conf/logging.properties.org ' + ALFRESCO_PATH + '/tomcat/conf/logging.properties')
 
     # We init data folder
     serviceRun.init_data_folder()
