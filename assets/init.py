@@ -402,7 +402,7 @@ class ServiceRun():
        pattern="combined" rotatable="false"
        prefix="access_log" suffix=".log" />
       """
-      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', '<Valve className="org.apache.catalina.valves.AccessLogValve"[^>]+/>', valve_setting)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', '</Host>', valve_setting + "\n</Host>")
 
       logging_setting = """
 1catalina.org.apache.juli.FileHandler.rotatable = false
