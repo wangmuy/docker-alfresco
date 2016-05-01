@@ -397,12 +397,9 @@ class ServiceRun():
 
   def disable_log_rotation(self):
 
-      valve_setting = """
-<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-       pattern="combined" rotatable="false"
-       prefix="access_log" suffix=".log" />
-      """
-      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', '</Host>', valve_setting + "\n</Host>")
+      valve_setting = 'prefix="localhost_access_log" suffix=".log" pattern="combined" rotatable="false"'
+      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', 'prefix="localhost_access_log" suffix=".txt"', valve_setting)
+      self.replace_all(ALFRESCO_PATH + '/tomcat/conf/server.xml', re.escape('pattern="%h %l %u %t &quot;%r&quot; %s %b"'), '')
 
       logging_setting = """
 1catalina.org.apache.juli.FileHandler.rotatable = false
