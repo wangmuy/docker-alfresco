@@ -128,6 +128,7 @@ class ServiceRun():
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.port\s*=.*', 'mail.port=' + port)
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.protocol\s*=.*', 'mail.protocol=' + protocol)
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.from.default\s*=.*', 'mail.from.default=' + mail_sender)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.from.enabled\s*=.*', 'mail.from.enabled=false')
       else:
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.host\s*=', '#mail.host=')
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.port\s*=', '#mail.port=')
@@ -137,17 +138,17 @@ class ServiceRun():
       if user is not None and user != "":
           if password is None or password == "":
               raise KeyError("You must provide password")
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.username\s*=.*', 'mail.username=' + username)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.username\s*=.*', 'mail.username=' + user)
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.password\s*=.*', 'mail.password=' + password)
 
           if protocol == "smtp":
-              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.auth\s*=.*', 'mail.smtp.auth=true')
+              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.auth\s*=.*', 'mail.smtp.auth=false')
               if starttls_enable == "true":
                   self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.starttls.enable\s*=.*', 'mail.smtp.starttls.enable=true')
               else:
                   self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtp.starttls.enable\s*=', '#mail.smtp.starttls.enable=')
           elif protocol == "smtps":
-              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.auth\s*=.*', 'mail.smtps.auth=true')
+              self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.auth\s*=.*', 'mail.smtps.auth=false')
               if starttls_enable == "true":
                   self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.mail.smtps.starttls.enable\s*=.*', 'mail.smtps.starttls.enable=true')
               else:
@@ -205,13 +206,13 @@ class ServiceRun():
               raise KeyError("You must provide the search base user")
 
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'authentication.chain\s*=.*', 'authentication.chain=alfrescoNtlm1:alfrescoNtlm,ldap1:ldap')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.authentication.userNameFormat\s*=.*', 'ldap.authentication.userNameFormat=' + auth_format)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.authentication.java.naming.provider.url\s*=.*', 'ldap.authentication.java.naming.provider.url=ldap://' + host + ':389')
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.authentication.defaultAdministratorUserNames\s*=.*', 'ldap.authentication.defaultAdministratorUserNames=' + list_admins)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.synchronization.java.naming.security.principal\s*=.*', 'ldap.synchronization.java.naming.security.principal=' + user)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.synchronization.java.naming.security.credentials\s*=.*', 'ldap.synchronization.java.naming.security.credentials=' + password)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.synchronization.groupSearchBase\s*=.*', 'ldap.synchronization.groupSearchBase=' + search_base_group)
-          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.propertie', 'ldap.synchronization.userSearchBase\s*=.*', 'ldap.synchronization.userSearchBase=' + search_base_user)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.authentication.userNameFormat\s*=.*', 'ldap.authentication.userNameFormat=' + auth_format)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.authentication.java.naming.provider.url\s*=.*', 'ldap.authentication.java.naming.provider.url=ldap://' + host + ':389')
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.authentication.defaultAdministratorUserNames\s*=.*', 'ldap.authentication.defaultAdministratorUserNames=' + list_admins)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.synchronization.java.naming.security.principal\s*=.*', 'ldap.synchronization.java.naming.security.principal=' + user)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.synchronization.java.naming.security.credentials\s*=.*', 'ldap.synchronization.java.naming.security.credentials=' + password)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.synchronization.groupSearchBase\s*=.*', 'ldap.synchronization.groupSearchBase=' + search_base_group)
+          self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties', 'ldap.synchronization.userSearchBase\s*=.*', 'ldap.synchronization.userSearchBase=' + search_base_user)
       else:
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', 'authentication.chain\s*=.*', 'authentication.chain=alfrescoNtlm1:alfrescoNtlm')
 
@@ -232,7 +233,6 @@ class ServiceRun():
 
       csrf_policy = """
 <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
-
       <!--
          Will be used and exposed to the client side code in Alfresco.contants.CSRF_POLICY.
          Use the Alfresco.util.CSRFPolicy.getHeader() or Alfresco.util.CSRFPolicy.getParameter() with Alfresco.util.CSRFPolicy.getToken()
@@ -243,7 +243,6 @@ class ServiceRun():
          <header>Alfresco-CSRFToken</header>
          <parameter>Alfresco-CSRFToken</parameter>
       </client>
-
       <!-- The first rule with a matching request will get its action invoked, the remaining rules will be ignored. -->
       <filter>
          <!--
@@ -264,7 +263,6 @@ class ServiceRun():
                <param name="origin">""" + url + """</param>
             </action>
          </rule>
-
          <!-- Certain Share POST requests does NOT require a token -->
          <rule>
             <request>
@@ -280,7 +278,6 @@ class ServiceRun():
                <param name="origin">""" + url + """</param>
             </action>
          </rule>
-
          <!-- Clear the token when logging out -->
          <rule>
             <request>
@@ -292,7 +289,6 @@ class ServiceRun():
                <param name="cookie">Alfresco-CSRFToken</param>
             </action>
          </rule>
-
          <!-- Make sure the first token is generated -->
          <rule>
             <request>
@@ -307,7 +303,6 @@ class ServiceRun():
                <param name="cookie">Alfresco-CSRFToken</param>
             </action>
          </rule>
-
          <!-- Refresh token on new "page" visit when a user is logged in -->
          <rule>
             <request>
@@ -323,7 +318,6 @@ class ServiceRun():
                <param name="cookie">Alfresco-CSRFToken</param>
             </action>
          </rule>
-
          <!-- Verify multipart requests contains the token as a parameter and also correct referer & origin header if available -->
          <rule>
             <request>
@@ -346,7 +340,6 @@ class ServiceRun():
                <param name="origin">""" + url + """</param>
             </action>
          </rule>
-
          <!--
             Verify there is a token in the header for remaining state changing requests and also correct
             referer & origin headers if available. We "catch" all content types since just setting it to
@@ -372,7 +365,6 @@ class ServiceRun():
                <param name="always">false</param>
                <param name="origin">""" + url + """</param>
             </action>
-
          </rule>
       </filter>
    </config>
@@ -406,7 +398,6 @@ class ServiceRun():
 2localhost.org.apache.juli.FileHandler.rotatable = false
 3manager.org.apache.juli.FileHandler.rotatable = false
 4host-manager.org.apache.juli.FileHandler.rotatable = false
-
 1catalina.org.apache.juli.FileHandler.suffix = log
 2localhost.org.apache.juli.FileHandler.suffix = log
 3manager.org.apache.juli.FileHandler.suffix = log
