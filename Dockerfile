@@ -1,7 +1,7 @@
 FROM webcenter/rancher-alfresco
 MAINTAINER wangmuy@gmail.com
 
-COPY init.py  /app/
+COPY assets/init.py  /app/
 
 RUN wget http://downloads.sourceforge.net/wqy/wqy-bitmapfont-0.9.9-0_all.deb -O /tmp/wqy-bitmapfont-0.9.9-0_all.deb
 RUN dpkg -i /tmp/wqy-bitmapfont-0.9.9-0_all.deb
