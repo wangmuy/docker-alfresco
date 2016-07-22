@@ -24,7 +24,7 @@ docker run -d \
   -v /data/alfresco/db:/var/lib/postgresql/data/pgdata \
   -v /data/alfresco/data:/opt/alfresco/alf_data \
   wangmuy/alfresco
-···
+```
 
 # Table of Contents
 
