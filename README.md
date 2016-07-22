@@ -1,6 +1,28 @@
 rancher-alfresco(added chinese font)
 ===============
 
+# Quick & dirty
+docker run -d \
+  -e 'LDAP_ENABLED=true' \
+  -e 'LDAP_AUTH_FORMAT=uid=%s,ou=People,dc=domain,dc=com' \
+  -e 'LDAP_HOST=192.168.1.101' \
+  -e 'LDAP_USER=cn=Manager,dc=domain,dc=com' \
+  -e 'LDAP_PASSWORD=ldappwd' \
+  -e 'LDAP_ADMINS=administrator,admin' \
+  -e 'LDAP_GROUP_SEARCHBASE=ou=Group,dc=domain,dc=com' \
+  -e 'LDAP_USER_SEARCHBASE=ou=People,dc=domain,dc=com' \
+  -e 'MAIL_HOST=smtp.exmail.qq.com' \
+  -e 'MAIL_PORT=465' \
+  -e 'MAIL_PROTOCOL=smtps'\
+  -e 'MAIL_STARTTLS_ENABLE=true' \
+  -e 'MAIL_USER=OA@domain.com' \
+  -e 'MAIL_PASSWORD=oapwd' \
+  -e 'MAIL_SENDER=OA@domain.com' \
+  -p 7070:7070 -p 8888:8080 \
+  -v /data/alfresco/db:/var/lib/postgresql/data/pgdata \
+  -v /data/alfresco/data:/opt/alfresco/alf_data \
+  wangmuy/alfresco
+
 # Table of Contents
 
 - [Introduction](#introduction)
