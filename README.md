@@ -2,6 +2,8 @@ rancher-alfresco(added chinese font)
 ===============
 
 # Quick & dirty
+
+```shell
 docker run -d \
   -e 'LDAP_ENABLED=true' \
   -e 'LDAP_AUTH_FORMAT=uid=%s,ou=People,dc=domain,dc=com' \
@@ -22,6 +24,7 @@ docker run -d \
   -v /data/alfresco/db:/var/lib/postgresql/data/pgdata \
   -v /data/alfresco/data:/opt/alfresco/alf_data \
   wangmuy/alfresco
+···
 
 # Table of Contents
 
