@@ -9,8 +9,13 @@ import time
 __author__ = 'Sebastien LANGOUREAUX'
 
 ALFRESCO_PATH = '/opt/alfresco'
+ALFRESCO_GLOBAL_BAK = ALFRESCO_PATH + '/alf_data/alfresco-global.properties.bak'
+ALFRESCO_LDAP_BAK = ALFRESCO_PATH + '/alf_data/ldap-authentication.properties.bak'
 
 class ServiceRun():
+
+  skipSetupGlobal = False
+  skipSetupLdap = False
 
   def set_database_connection(self, db_type, db_host, db_port, db_name, db_user, db_password):
       global ALFRESCO_PATH
@@ -27,6 +32,9 @@ class ServiceRun():
       else:
           self.replace_all('/etc/supervisor/conf.d/supervisord-postgresql.conf', 'autostart\s*=.*', 'autostart=true')
           self.replace_all('/etc/supervisor/conf.d/supervisord-postgresql.conf', 'autorestart\s*=.*', 'autorestart=true')
+
+      if self.skipSetupGlobal == True:
+          return
 
       if db_host is None or db_host == "":
           raise KeyError("You must provide db_host")
@@ -60,6 +68,9 @@ class ServiceRun():
   def set_alfresco_context(self, host, port, protocol):
       global ALFRESCO_PATH
 
+      if self.skipSetupGlobal == True:
+          return
+
       if host is None or host == "":
           raise KeyError("You must provide host")
 
@@ -78,6 +89,9 @@ class ServiceRun():
   def set_share_context(self, host, port, protocol):
       global ALFRESCO_PATH
 
+      if self.skipSetupGlobal == True:
+          return
+
       if host is None or host == "":
           raise KeyError("You must provide host")
 
@@ -94,6 +108,9 @@ class ServiceRun():
   def set_ftp(self, enable, port):
       global ALFRESCO_PATH
 
+      if self.skipSetupGlobal == True:
+          return
+
       if port is None or port == "":
           raise KeyError("You must provide port")
 
@@ -106,6 +123,9 @@ class ServiceRun():
   def set_core(self, environment):
       global ALFRESCO_PATH
 
+      if self.skipSetupGlobal == True:
+          return
+
       if environment not in ["UNKNOWN", "TEST", "BACKUP", "PRODUCTION"]:
           raise KeyError("Environment must be UNKNOWN, TEST, BACKUP or PRODUCTION")
 
@@ -116,6 +136,9 @@ class ServiceRun():
 
   def set_mail(self, host, port, user, password, protocol, starttls_enable, mail_sender):
       global ALFRESCO_PATH
+
+      if self.skipSetupGlobal == True:
+          return
 
       if host is not None and host != "":
           if port is None or port == "":
@@ -166,6 +189,9 @@ class ServiceRun():
   def set_cifs(self, enable, server_name, domain):
       global ALFRESCO_PATH
 
+      if self.skipSetupGlobal == True:
+          return
+
       if enable == "true":
           if server_name is None or server_name == "":
               raise KeyError("You must provide the server name")
@@ -188,6 +214,9 @@ class ServiceRun():
 
   def set_ldap(self, enable, auth_format, host, user, password, list_admins, search_base_group, search_base_user):
       global ALFRESCO_PATH
+
+      if self.skipSetupLdap == True:
+          return
 
       if enable == "true":
           if auth_format is None or auth_format == "":
@@ -219,7 +248,7 @@ class ServiceRun():
   def init_data_folder(self):
       global ALFRESCO_PATH
 
-      if len(os.listdir(ALFRESCO_PATH + '/alf_data')) < 3:
+      if len(os.listdir(ALFRESCO_PATH + '/alf_data')) < 5:
           os.system('mv ' + ALFRESCO_PATH + '/alf_data_org/* ' + ALFRESCO_PATH + '/alf_data/')
           os.system('chown -R alfresco:alfresco ' + ALFRESCO_PATH + '/alf_data')
 
@@ -376,6 +405,9 @@ class ServiceRun():
 
   def set_vti_setting(self, host, port):
 
+      if self.skipSetupGlobal == True:
+          return
+
       if host is not None and host != "" and port is not None and port > 0:
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.port\s*=.*', 'vti.server.port=7070')
           self.replace_all(ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties', '^#.vti.server.external.host\s*=.*', 'vti.server.external.host=' + host)
@@ -452,10 +484,26 @@ class ServiceRun():
 
 if __name__ == '__main__':
 
+    if os.path.isfile(ALFRESCO_PATH + '/init_done'):
+        print('echo ==================== find init_done, skip!')
+        exit(0)
+    else:
+        os.system('touch ' + ALFRESCO_PATH + '/init_done')
+
     serviceRun = ServiceRun()
 
     # We init alfresco config
-    os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties')
+    if os.path.isfile(ALFRESCO_GLOBAL_BAK):
+        serviceRun.skipSetupGlobal = True
+        print('echo ========== copy global bak')
+        os.system('cp ' + ALFRESCO_GLOBAL_BAK + ' ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties')
+    else:
+        os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco-global.properties')
+
+    if os.path.isfile(ALFRESCO_LDAP_BAK):
+        serviceRun.skipSetupLdap = True
+        print('echo ========== copy ldap bak')
+        os.system('cp ' + ALFRESCO_LDAP_BAK + ' ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap/ldap1/ldap-authentication.properties')
 
     # We init share-config
     os.system('cp ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml.org ' + ALFRESCO_PATH + '/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml')
